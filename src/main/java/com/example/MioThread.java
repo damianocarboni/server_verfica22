@@ -24,16 +24,17 @@ public class MioThread extends Thread {
             boolean nuovaPartita = true;
             boolean numeroValido = true;
             int tentativi = 1;
-            while (nuovaPartita == true) {
+            while (nuovaPartita) {
                 do {
                     stringaRicevuta = in.readLine();
                     System.out.println("La stringa ricevuta: " + stringaRicevuta);
                     numeroValido = true;
-                    if (stringaRicevuta.compareTo("0") == -1 || stringaRicevuta.compareTo("100") == 1) {
+                    int numeroRicevuto = Integer.parseInt(stringaRicevuta);
+                    if (numeroRicevuto < 0 || numeroRicevuto > 100) {
                         numeroValido = false;
                         out.writeBytes("!\n");
                     }
-                } while (numeroValido = true);
+                } while (!numeroValido);
 
                 if (Integer.parseInt(stringaRicevuta) < numeroDaIndovinare) {
                     out.writeBytes("<\n");
@@ -45,7 +46,9 @@ public class MioThread extends Thread {
                     out.writeBytes("=\n");
                     out.writeBytes(tentativi + "\n");
                     String contr = in.readLine();
-                    if (contr == "s") {
+                    System.out.println("La stringa ricevuta: " + contr);
+
+                    if (contr.equals("s")) {
                         tentativi = 1;
                         numeroDaIndovinare = random.nextInt(100);
                     } else
